@@ -268,9 +268,10 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     object sbLocalizar: TSearchBox
       Left = 8
       Top = 25
-      Width = 250
+      Width = 358
       Height = 21
       TabOrder = 1
+      OnChange = sbLocalizarChange
     end
   end
   object pnlEndereco: TPanel

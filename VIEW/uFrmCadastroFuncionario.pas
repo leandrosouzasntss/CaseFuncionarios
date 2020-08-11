@@ -42,6 +42,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure dsFuncionariosDataChange(Sender: TObject; Field: TField);
     procedure btnExcluirClick(Sender: TObject);
+    procedure sbLocalizarChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -63,10 +64,8 @@ begin
      If  MessageDlg('Você tem certeza que deseja excluir o registro?',mtConfirmation,[mbyes,mbno],0)=mryes
   then
      begin
-    //uDmConexao.cdsFuncionario.Edit;
-     uDmConexao.cdsFuncionario.Delete;
-    // uDmConexao.cdsFuncionario.Post;
-     uDmConexao.ListarFuncionario;
+       uDmConexao.cdsFuncionario.Delete;
+       uDmConexao.ListarFuncionario;
      end;
   end;
 
@@ -90,10 +89,8 @@ begin
 
    if uDmConexao.cdsFuncionario.State in [dsInsert,dsEdit] then
    begin
-      //uDmConexao.cdsFuncionarionome.AsString := edtNome.Text;
       uDmConexao.cdsFuncionariodtnasc.AsDateTime := dtpDtNasc.Date;
       uDmConexao.cdsFuncionariodtadmissao.AsDateTime := dtpDtAdmissao.Date;
-      //uDmConexao.cdsFuncionariofuncao.AsString := edtFuncao.Text;
       uDmConexao.cdsFuncionario.Post;
       uDmConexao.ListarFuncionario;
    end;
@@ -109,6 +106,26 @@ end;
 procedure TfrmCadastroFuncionario.FormShow(Sender: TObject);
 begin
   uDmConexao.ListarFuncionario;
+end;
+
+procedure TfrmCadastroFuncionario.sbLocalizarChange(Sender: TObject);
+begin
+    //Pesquisar
+    if uDmConexao.cdsListarFuncionario.State = dsBrowse then
+    begin
+      if sbLocalizar.Text = '' then
+      begin
+         uDmConexao.cdsListarFuncionario.Filtered := False;
+         uDmConexao.cdsListarFuncionario.Filter   := '';
+         uDmConexao.cdsListarFuncionario.Filtered := True;
+      end
+      else
+      begin
+         uDmConexao.cdsListarFuncionario.Filtered := False;
+         uDmConexao.cdsListarFuncionario.Filter   := 'NOME LIKE (%'+ sbLocalizar.Text +'%)'  ;
+         uDmConexao.cdsListarFuncionario.Filtered := True;
+      end;
+    end;
 end;
 
 end.
