@@ -31,8 +31,6 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     ParentCtl3D = False
     ParentDoubleBuffered = False
     TabOrder = 2
-    ExplicitTop = 201
-    ExplicitHeight = 192
     object lblDescricao: TLabel
       Left = 8
       Top = 8
@@ -291,7 +289,6 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     ParentCtl3D = False
     ParentDoubleBuffered = False
     TabOrder = 1
-    ExplicitTop = 448
     object btnExcluirEndereco: TButton
       Left = 8
       Top = 58
