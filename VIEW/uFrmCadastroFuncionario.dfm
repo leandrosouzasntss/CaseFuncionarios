@@ -227,6 +227,7 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
       Width = 586
       Height = 120
       DataSource = dsListarFuncionarios
+      ReadOnly = True
       TabOrder = 2
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
