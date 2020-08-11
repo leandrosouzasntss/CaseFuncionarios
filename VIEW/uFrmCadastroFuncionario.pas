@@ -29,9 +29,9 @@ type
     btnNovo: TButton;
     dsListarFuncionarios: TDataSource;
     dsEnderecos: TDataSource;
-    Panel1: TPanel;
-    Panel2: TPanel;
-    Panel3: TPanel;
+    pnlFuncionarios: TPanel;
+    pnlEndereco: TPanel;
+    pnlEditar: TPanel;
     edtNome: TDBEdit;
     edtFuncao: TDBEdit;
     lblNome: TLabel;
