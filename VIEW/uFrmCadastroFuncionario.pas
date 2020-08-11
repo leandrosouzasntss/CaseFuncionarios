@@ -122,8 +122,7 @@ begin
       else
       begin
          uDmConexao.cdsListarFuncionario.Filtered := False;
-         uDmConexao.cdsListarFuncionario.Filter   :=
-             'NOME LIKE ' + QuotedStr('%' + Trim(sbLocalizar.Text) + '%');
+         uDmConexao.cdsListarFuncionario.Filter   := 'NOME LIKE ('''+ sbLocalizar.Text +''')'  ;
          uDmConexao.cdsListarFuncionario.Filtered := True;
       end;
     end;
