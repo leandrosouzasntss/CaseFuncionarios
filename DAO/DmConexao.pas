@@ -61,6 +61,7 @@ type
     procedure cdsFuncionarioAfterDelete(DataSet: TDataSet);
     procedure cdsEnderecoBeforePost(DataSet: TDataSet);
     procedure cdsEnderecoAfterPost(DataSet: TDataSet);
+    procedure cdsEnderecoAfterDelete(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -84,6 +85,11 @@ uses
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 {$R *.dfm}
 
+procedure TuDmConexao.cdsEnderecoAfterDelete(DataSet: TDataSet);
+begin
+   GravarEndereco;
+end;
+
 procedure TuDmConexao.cdsEnderecoAfterPost(DataSet: TDataSet);
 begin
   GravarEndereco;
@@ -100,7 +106,7 @@ begin
 
   try
     SQL.SQLConnection := SQLConnection;
-    SQL.CommandText := 'SELECT MAX(ID)+1 AS ID FROM ENDFUNC';
+    SQL.CommandText := 'SELECT MAX(COALESCE(ID,0))+1 AS ID FROM ENDFUNC';
     SQL.Open;
 
     cdsEnderecoid.AsInteger := SQL.FieldByName('ID').AsInteger;
@@ -135,7 +141,7 @@ begin
 
     try
       SQL.SQLConnection := SQLConnection;
-      SQL.CommandText := 'SELECT MAX(CODIGO)+1 AS ID FROM FUNCIONARIOS';
+      SQL.CommandText := 'SELECT MAX(COALESCE(CODIGO,0))+1 AS ID FROM FUNCIONARIOS';
       SQL.Open;
 
       cdsFuncionariocodigo.AsInteger := SQL.FieldByName('ID').AsInteger;
