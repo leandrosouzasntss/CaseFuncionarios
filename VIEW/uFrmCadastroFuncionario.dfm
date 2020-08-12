@@ -34,8 +34,8 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     ParentCtl3D = False
     ParentDoubleBuffered = False
     TabOrder = 2
-    ExplicitWidth = 601
-    ExplicitHeight = 176
+    ExplicitLeft = 368
+    ExplicitTop = 225
     object lblDescricao: TLabel
       Left = 8
       Top = 8
@@ -225,10 +225,9 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     ParentCtl3D = False
     ParentDoubleBuffered = False
     TabOrder = 0
-    ExplicitWidth = 601
     object grdFuncionarios: TDBGrid
       Left = 8
-      Top = 56
+      Top = 62
       Width = 586
       Height = 120
       DataSource = dsListarFuncionarios
@@ -251,7 +250,7 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
           Expanded = False
           FieldName = 'nome'
           Title.Caption = 'Nome'
-          Width = 300
+          Width = 435
           Visible = True
         end>
     end
@@ -296,8 +295,6 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     ParentCtl3D = False
     ParentDoubleBuffered = False
     TabOrder = 1
-    ExplicitTop = 361
-    ExplicitWidth = 601
     object btnExcluirEndereco: TButton
       Left = 8
       Top = 58
@@ -311,6 +308,7 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 1
+      OnClick = btnExcluirEnderecoClick
     end
     object btnNovoEndereco: TButton
       Left = 8
@@ -344,25 +342,28 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
           Expanded = False
           FieldName = 'endereco'
           Title.Caption = 'ENDERE'#199'O'
+          Width = 200
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'bairro'
           Title.Caption = 'BAIRRO'
+          Width = 150
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'cep'
           Title.Caption = 'CEP'
+          Width = 70
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'cidade'
           Title.Caption = 'CIDADE'
-          Width = 150
+          Width = 100
           Visible = True
         end>
     end

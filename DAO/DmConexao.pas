@@ -69,7 +69,6 @@ type
     procedure ListarFuncionario;
     procedure GravarEndereco;
     procedure NovoEndereco;
-    Procedure ListarEndereco;
     procedure DeletarFuncionario;
     { Public declarations }
   end;
@@ -168,17 +167,14 @@ end;
 
 procedure TuDmConexao.DeletarFuncionario;
 begin
-//// Endereço
-//  frmDataModulo.DataModule1.cdsEndcli.First;
-//  while not frmDataModulo.DataModule1.cdsEndcli.Eof do
-//  begin
-//    frmDataModulo.DataModule1.cdsEndcli.Edit;
-//    frmDataModulo.DataModule1.cdsEndcliCODCLI.AsInteger := codCliente;
-//    frmDataModulo.DataModule1.cdsEndcli.Post;
-//
-//    frmDataModulo.DataModule1.cdsEndcli.Next;
-//  end;
-//  frmDataModulo.DataModule1.cdsEndcli.ApplyUpdates(0);
+   uDmConexao.cdsFuncionario.Delete;
+   uDmConexao.ListarFuncionario;
+
+  // Validação Para Deletar Funcionario
+   while not cdsEndereco.Eof do
+   begin
+      cdsEndereco.Delete;
+   end;
 end;
 
 procedure TuDmConexao.GravarEndereco;
@@ -205,13 +201,6 @@ begin
   // Se passar na Validação ele persiste do Post para o Banco (ApplyUpdates);
   if not(cdsFuncionario.State in [dsInactive]) then
     cdsFuncionario.ApplyUpdates(-1);
-end;
-
-procedure TuDmConexao.ListarEndereco;
-begin
-  uDmConexao.cdsEndereco.Close;
-  uDmConexao.cdsEndereco.ParamByName('CODFUNC').AsInteger := 0;
-  uDmConexao.cdsEndereco.Open;
 end;
 
 procedure TuDmConexao.ListarFuncionario;
