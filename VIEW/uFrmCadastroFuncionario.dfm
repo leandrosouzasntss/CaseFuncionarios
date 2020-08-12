@@ -31,7 +31,6 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     ParentCtl3D = False
     ParentDoubleBuffered = False
     TabOrder = 2
-    ExplicitLeft = 5
     object lblDescricao: TLabel
       Left = 8
       Top = 8
@@ -287,6 +286,7 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     BevelOuter = bvNone
     Ctl3D = True
     DoubleBuffered = False
+    Enabled = False
     ParentColor = True
     ParentCtl3D = False
     ParentDoubleBuffered = False
@@ -326,6 +326,7 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
       Width = 544
       Height = 120
       DataSource = dsEnderecos
+      ReadOnly = True
       TabOrder = 2
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
