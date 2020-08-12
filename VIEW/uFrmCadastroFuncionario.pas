@@ -78,21 +78,26 @@ end;
 
 procedure TfrmCadastroFuncionario.btnSalvarClick(Sender: TObject);
 begin
-   if uDmConexao.cdsFuncionarioCodigo.AsInteger <= 0 then
-   begin
-      if not (uDmConexao.cdsFuncionario.State in [dsInsert]) then
-         uDmConexao.NovoFuncionario;
-   end;
+   uDmConexao.cdsFuncionario.DisableControls;
+   try
+     if uDmConexao.cdsFuncionarioCodigo.AsInteger <= 0 then
+     begin
+        if not (uDmConexao.cdsFuncionario.State in [dsInsert]) then
+           uDmConexao.NovoFuncionario;
+     end;
 
-   if not (uDmConexao.cdsFuncionario.State in [dsInsert,dsEdit]) then
-      uDmConexao.cdsFuncionario.Edit;
+     if not (uDmConexao.cdsFuncionario.State in [dsInsert,dsEdit]) then
+        uDmConexao.cdsFuncionario.Edit;
 
-   if uDmConexao.cdsFuncionario.State in [dsInsert,dsEdit] then
-   begin
-      uDmConexao.cdsFuncionariodtnasc.AsDateTime := dtpDtNasc.Date;
-      uDmConexao.cdsFuncionariodtadmissao.AsDateTime := dtpDtAdmissao.Date;
-      uDmConexao.cdsFuncionario.Post;
-      uDmConexao.ListarFuncionario;
+     if uDmConexao.cdsFuncionario.State in [dsInsert,dsEdit] then
+     begin
+        uDmConexao.cdsFuncionariodtnasc.AsDateTime := dtpDtNasc.Date;
+        uDmConexao.cdsFuncionariodtadmissao.AsDateTime := dtpDtAdmissao.Date;
+        uDmConexao.cdsFuncionario.Post;
+        uDmConexao.ListarFuncionario;
+     end;
+   finally
+     uDmConexao.cdsFuncionario.EnableControls;
    end;
 end;
 
@@ -122,7 +127,8 @@ begin
       else
       begin
          uDmConexao.cdsListarFuncionario.Filtered := False;
-         uDmConexao.cdsListarFuncionario.Filter   := 'NOME LIKE ('''+ sbLocalizar.Text +''')'  ;
+         uDmConexao.cdsListarFuncionario.Filter   :=
+         'NOME LIKE ('''+ sbLocalizar.Text +''')'  ;
          uDmConexao.cdsListarFuncionario.Filtered := True;
       end;
     end;
