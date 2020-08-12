@@ -1,9 +1,10 @@
 object frmCadastroFuncionario: TfrmCadastroFuncionario
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Cadastro de Funcion'#225'rios'
-  ClientHeight = 517
-  ClientWidth = 601
+  ClientHeight = 527
+  ClientWidth = 611
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,14 +12,16 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
+  PrintScale = poNone
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pnlEditar: TPanel
     Left = 0
     Top = 185
-    Width = 601
-    Height = 176
+    Width = 611
+    Height = 186
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -31,6 +34,8 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     ParentCtl3D = False
     ParentDoubleBuffered = False
     TabOrder = 2
+    ExplicitWidth = 601
+    ExplicitHeight = 176
     object lblDescricao: TLabel
       Left = 8
       Top = 8
@@ -207,7 +212,7 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
   object pnlFuncionarios: TPanel
     Left = 0
     Top = 0
-    Width = 601
+    Width = 611
     Height = 185
     Margins.Left = 0
     Margins.Top = 0
@@ -221,6 +226,7 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     ParentCtl3D = False
     ParentDoubleBuffered = False
     TabOrder = 0
+    ExplicitWidth = 601
     object grdFuncionarios: TDBGrid
       Left = 8
       Top = 56
@@ -275,8 +281,8 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
   end
   object pnlEndereco: TPanel
     Left = 0
-    Top = 361
-    Width = 601
+    Top = 371
+    Width = 611
     Height = 156
     Margins.Left = 0
     Margins.Top = 0
@@ -291,6 +297,8 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     ParentCtl3D = False
     ParentDoubleBuffered = False
     TabOrder = 1
+    ExplicitTop = 361
+    ExplicitWidth = 601
     object btnExcluirEndereco: TButton
       Left = 8
       Top = 58
