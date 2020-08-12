@@ -308,7 +308,6 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 1
-      OnClick = btnExcluirEnderecoClick
     end
     object btnNovoEndereco: TButton
       Left = 8
