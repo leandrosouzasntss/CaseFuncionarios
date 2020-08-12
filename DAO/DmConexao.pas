@@ -15,7 +15,6 @@ type
     dspEndereco: TDataSetProvider;
     cdsFuncionario: TClientDataSet;
     cdsEndereco: TClientDataSet;
-    SQL: TSQLQuery;
     sqlFuncionariocodigo: TIntegerField;
     sqlFuncionarionome: TStringField;
     sqlFuncionariodtnasc: TDateField;
@@ -71,6 +70,7 @@ type
     procedure GravarEndereco;
     procedure NovoEndereco;
     Procedure ListarEndereco;
+    procedure DeletarFuncionario;
     { Public declarations }
   end;
 
@@ -105,6 +105,7 @@ begin
     SQL.Open;
 
     cdsEnderecoid.AsInteger := SQL.FieldByName('ID').AsInteger;
+    cdsEnderecocodfunc.AsInteger := cdsFuncionariocodigo.AsInteger;
   finally
     SQL.Free;
   end;
@@ -165,8 +166,24 @@ begin
 
 end;
 
+procedure TuDmConexao.DeletarFuncionario;
+begin
+//// Endereço
+//  frmDataModulo.DataModule1.cdsEndcli.First;
+//  while not frmDataModulo.DataModule1.cdsEndcli.Eof do
+//  begin
+//    frmDataModulo.DataModule1.cdsEndcli.Edit;
+//    frmDataModulo.DataModule1.cdsEndcliCODCLI.AsInteger := codCliente;
+//    frmDataModulo.DataModule1.cdsEndcli.Post;
+//
+//    frmDataModulo.DataModule1.cdsEndcli.Next;
+//  end;
+//  frmDataModulo.DataModule1.cdsEndcli.ApplyUpdates(0);
+end;
+
 procedure TuDmConexao.GravarEndereco;
 begin
+  //Não pode estar em dsBrowse
   if (cdsEndereco.State in [dsEdit, dsInsert]) then
   begin
     cdsEndereco.Cancel;
@@ -206,10 +223,30 @@ end;
 
 procedure TuDmConexao.NovoEndereco;
 begin
-  cdsEndereco.Close;
-  cdsEndereco.ParamByName('CODFUNC').AsInteger := -1;
-  cdsEndereco.Open;
-  cdsEndereco.Append;
+  if cdsEnderecocodfunc.AsString.IsEmpty then
+  begin
+
+    if not (cdsEndereco.State in dsEditModes) then
+    begin
+      cdsEndereco.close;
+        cdsEndereco.Params.ParamByName('CODFUNC')
+        .AsInteger := -1;
+      cdsEndereco.open;
+    end;
+
+    cdsEndereco.Append;
+  end
+    else
+  begin
+    cdsEndereco.Append;
+  end;
+
+
+//  cdsEndereco.Close;
+//  cdsEndereco.ParamByName('CODFUNC').AsInteger := -1;
+//  cdsEndereco.Open;
+//  cdsEndereco.Append;
+
 end;
 
 procedure TuDmConexao.NovoFuncionario;

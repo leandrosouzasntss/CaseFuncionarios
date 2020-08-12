@@ -223,13 +223,6 @@ object uDmConexao: TuDmConexao
       Size = 45
     end
   end
-  object SQL: TSQLQuery
-    MaxBlobSize = -1
-    Params = <>
-    SQLConnection = SQLConnection
-    Left = 464
-    Top = 105
-  end
   object sqlListarFuncionario: TSQLDataSet
     CommandText = 'SELECT * FROM'#13#10'FUNCIONARIOS'#13#10'WHERE '#13#10'(CODIGO = :ID OR :ID = 0);'
     MaxBlobSize = -1
