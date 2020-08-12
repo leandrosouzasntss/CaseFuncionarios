@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.DBCtrls,
   Vcl.ComCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.WinXCtrls, DmConexao,
-  Vcl.Mask;
+  Vcl.Mask, System.Actions, Vcl.ActnList;
 
 type
   TfrmCadastroFuncionario = class(TForm)
@@ -37,13 +37,15 @@ type
     lblNome: TLabel;
     lblFuncao: TLabel;
     dsFuncionarios: TDataSource;
-    procedure btnNovoClick(Sender: TObject);
+    AC_LIST: TActionList;
+    ACT_NOVOENDERECO: TAction;
     procedure btnSalvarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dsFuncionariosDataChange(Sender: TObject; Field: TField);
     procedure btnExcluirClick(Sender: TObject);
     procedure sbLocalizarChange(Sender: TObject);
     procedure btnNovoEnderecoClick(Sender: TObject);
+    procedure ACT_NOVOENDERECOExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -56,6 +58,12 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TfrmCadastroFuncionario.ACT_NOVOENDERECOExecute(Sender: TObject);
+begin
+   uDmConexao.NovoFuncionario;
+   pnlEndereco.Enabled := False;
+end;
 
 procedure TfrmCadastroFuncionario.btnExcluirClick(Sender: TObject);
 begin
@@ -73,50 +81,55 @@ begin
 
 end;
 
-procedure TfrmCadastroFuncionario.btnNovoClick(Sender: TObject);
-begin
-  uDmConexao.NovoFuncionario;
-  pnlEndereco.Enabled := False;
-end;
-
 procedure TfrmCadastroFuncionario.btnNovoEnderecoClick(Sender: TObject);
 begin
-     uDmConexao.NovoEndereco;
-     grdEndFunc.ReadOnly := False;
+   uDmConexao.NovoEndereco;
+   grdEndFunc.ReadOnly := False;
 end;
 
 procedure TfrmCadastroFuncionario.btnSalvarClick(Sender: TObject);
 begin
-   uDmConexao.cdsFuncionario.DisableControls;
-   try
-     if uDmConexao.cdsFuncionarioCodigo.AsInteger <= 0 then
-     begin
-        if not (uDmConexao.cdsFuncionario.State in [dsInsert]) then
-           uDmConexao.NovoFuncionario;
-     end;
+   if edtNome.Text = '' then
+   begin
+     ShowMessage('Um nome deve ser informado');
+     Exit;
+   end;
 
-     if not (uDmConexao.cdsFuncionario.State in [dsInsert,dsEdit]) then
-        uDmConexao.cdsFuncionario.Edit;
+// if ValidaFuncionario then
+   begin
+     //alvarNoBancoDados;
 
-     if uDmConexao.cdsFuncionario.State in [dsInsert,dsEdit] then
-     begin
-        uDmConexao.cdsFuncionariodtnasc.AsDateTime := dtpDtNasc.Date;
-        uDmConexao.cdsFuncionariodtadmissao.AsDateTime := dtpDtAdmissao.Date;
-        uDmConexao.cdsFuncionario.Post;
-        uDmConexao.ListarFuncionario;
-        pnlEndereco.Enabled := uDmConexao.cdsFuncionarioCODIGO.AsInteger > 0;
+     uDmConexao.cdsFuncionario.DisableControls;
+     try
+       if uDmConexao.cdsFuncionarioCodigo.AsInteger <= 0 then
+       begin
+          if not (uDmConexao.cdsFuncionario.State in [dsInsert]) then
+             uDmConexao.NovoFuncionario;
+       end;
+
+       if not (uDmConexao.cdsFuncionario.State in [dsInsert,dsEdit]) then
+          uDmConexao.cdsFuncionario.Edit;
+
+       if uDmConexao.cdsFuncionario.State in [dsInsert,dsEdit] then
+       begin
+          uDmConexao.cdsFuncionariodtnasc.AsDateTime := dtpDtNasc.Date;
+          uDmConexao.cdsFuncionariodtadmissao.AsDateTime := dtpDtAdmissao.Date;
+          uDmConexao.cdsFuncionario.Post;
+          uDmConexao.ListarFuncionario;
+          pnlEndereco.Enabled := uDmConexao.cdsFuncionarioCODIGO.AsInteger > 0;
+       end;
+     finally
+       uDmConexao.cdsFuncionario.EnableControls;
      end;
-   finally
-     uDmConexao.cdsFuncionario.EnableControls;
    end;
 end;
 
 procedure TfrmCadastroFuncionario.dsFuncionariosDataChange(Sender: TObject;
   Field: TField);
 begin
-  dtpDtNasc.Date := uDmConexao.cdsFuncionariodtnasc.AsDateTime;
-  dtpDtAdmissao.Date := uDmConexao.cdsFuncionariodtadmissao.AsDateTime;
-  pnlEndereco.Enabled := uDmConexao.cdsFuncionarioCODIGO.AsInteger > 0;
+    dtpDtNasc.Date := uDmConexao.cdsFuncionariodtnasc.AsDateTime;
+    dtpDtAdmissao.Date := uDmConexao.cdsFuncionariodtadmissao.AsDateTime;
+    pnlEndereco.Enabled := uDmConexao.cdsFuncionarioCODIGO.AsInteger > 0;
 end;
 
 procedure TfrmCadastroFuncionario.FormShow(Sender: TObject);
@@ -127,8 +140,12 @@ end;
 procedure TfrmCadastroFuncionario.sbLocalizarChange(Sender: TObject);
 begin
     //Pesquisar
+    //Método Change, é acionado sempre que é alterado algo no sbLocalizar
+    //PesquisarFuncionario(sbLocalizar.Text ) Obs: Procedure com parametro do tipo string
+    //conteudo
     if uDmConexao.cdsListarFuncionario.State = dsBrowse then
     begin
+     //dsBrowse CDS esta aberto
       if sbLocalizar.Text = '' then
       begin
          uDmConexao.cdsListarFuncionario.Filtered := False;
@@ -139,7 +156,7 @@ begin
       begin
          uDmConexao.cdsListarFuncionario.Filtered := False;
          uDmConexao.cdsListarFuncionario.Filter   :=
-          'NOME LIKE ' + QuotedStr('%' + Trim(sbLocalizar.Text) + '%');
+          'NOME LIKE ' + QuotedStr('%' + Trim(sbLocalizar.Text) + '%');  // ""
          uDmConexao.cdsListarFuncionario.Filtered := True;
       end;
     end;

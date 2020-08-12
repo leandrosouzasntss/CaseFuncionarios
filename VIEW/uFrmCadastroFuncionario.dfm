@@ -127,7 +127,6 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 5
-      OnClick = btnNovoClick
     end
     object cbSexo: TDBComboBox
       Left = 8
@@ -318,7 +317,7 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
       Top = 27
       Width = 36
       Height = 25
-      Caption = '+'
+      Action = ACT_NOVOENDERECO
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -326,7 +325,6 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
-      OnClick = btnNovoEnderecoClick
     end
     object grdEndFunc: TDBGrid
       Left = 50
@@ -398,5 +396,13 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     OnDataChange = dsFuncionariosDataChange
     Left = 408
     Top = 8
+  end
+  object AC_LIST: TActionList
+    Left = 464
+    Top = 8
+    object ACT_NOVOENDERECO: TAction
+      Caption = '+'
+      OnExecute = ACT_NOVOENDERECOExecute
+    end
   end
 end
