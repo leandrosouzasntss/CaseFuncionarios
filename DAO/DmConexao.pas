@@ -106,10 +106,11 @@ begin
 
   try
     SQL.SQLConnection := SQLConnection;
-    SQL.CommandText := 'SELECT MAX(COALESCE(ID,0))+1 AS ID FROM ENDFUNC';
+    SQL.CommandText := 'SELECT MAX(COALESCE(ID,0)) AS ID FROM ENDFUNC';
     SQL.Open;
 
-    cdsEnderecoid.AsInteger := SQL.FieldByName('ID').AsInteger;
+    cdsEnderecoid.AsInteger := SQL.FieldByName('ID').AsInteger + 1;
+
     cdsEnderecocodfunc.AsInteger := cdsFuncionariocodigo.AsInteger;
   finally
     SQL.Free;
@@ -141,10 +142,10 @@ begin
 
     try
       SQL.SQLConnection := SQLConnection;
-      SQL.CommandText := 'SELECT MAX(COALESCE(CODIGO,0))+1 AS ID FROM FUNCIONARIOS';
+      SQL.CommandText := 'SELECT MAX(COALESCE(CODIGO,0)) AS ID FROM FUNCIONARIOS';
       SQL.Open;
 
-      cdsFuncionariocodigo.AsInteger := SQL.FieldByName('ID').AsInteger;
+      cdsFuncionariocodigo.AsInteger := SQL.FieldByName('ID').AsInteger + 1;
     finally
       SQL.Free;
     end;
@@ -174,13 +175,18 @@ end;
 procedure TuDmConexao.DeletarFuncionario;
 begin
    uDmConexao.cdsFuncionario.Delete;
-   uDmConexao.ListarFuncionario;
 
-  // Validação Para Deletar Funcionario
+   // Validação Para Deletar Funcionario
+   cdsEndereco.Close;
+   cdsEndereco.ParamByName('CODFUNC').AsInteger :=
+   cdsFuncionarioCODIGO.AsInteger;
+   cdsEndereco.Open;
+
+   cdsEndereco.First;
    while not cdsEndereco.Eof do
-   begin
       cdsEndereco.Delete;
-   end;
+
+   uDmConexao.ListarFuncionario;
 end;
 
 procedure TuDmConexao.GravarEndereco;

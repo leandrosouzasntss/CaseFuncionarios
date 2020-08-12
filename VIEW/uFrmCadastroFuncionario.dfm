@@ -117,7 +117,7 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
       Top = 134
       Width = 75
       Height = 41
-      Caption = 'NOVO'
+      Action = ACT_NOVOFUNCIONARIO
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -306,6 +306,7 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 1
+      OnClick = btnExcluirEnderecoClick
     end
     object btnNovoEndereco: TButton
       Left = 8
@@ -401,6 +402,10 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     object ACT_NOVOENDERECO: TAction
       Caption = '+'
       OnExecute = ACT_NOVOENDERECOExecute
+    end
+    object ACT_NOVOFUNCIONARIO: TAction
+      Caption = 'NOVO'
+      OnExecute = ACT_NOVOFUNCIONARIOExecute
     end
   end
 end

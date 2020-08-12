@@ -39,13 +39,15 @@ type
     dsFuncionarios: TDataSource;
     AC_LIST: TActionList;
     ACT_NOVOENDERECO: TAction;
+    ACT_NOVOFUNCIONARIO: TAction;
     procedure btnSalvarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dsFuncionariosDataChange(Sender: TObject; Field: TField);
     procedure btnExcluirClick(Sender: TObject);
     procedure sbLocalizarChange(Sender: TObject);
-    procedure btnNovoEnderecoClick(Sender: TObject);
     procedure ACT_NOVOENDERECOExecute(Sender: TObject);
+    procedure ACT_NOVOFUNCIONARIOExecute(Sender: TObject);
+    procedure btnExcluirEnderecoClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -61,6 +63,12 @@ implementation
 
 procedure TfrmCadastroFuncionario.ACT_NOVOENDERECOExecute(Sender: TObject);
 begin
+   uDmConexao.NovoEndereco;
+   grdEndFunc.ReadOnly := False;
+end;
+
+procedure TfrmCadastroFuncionario.ACT_NOVOFUNCIONARIOExecute(Sender: TObject);
+begin
    uDmConexao.NovoFuncionario;
    pnlEndereco.Enabled := False;
 end;
@@ -73,18 +81,16 @@ begin
      If  MessageDlg('Você tem certeza que deseja excluir o registro?',mtConfirmation,[mbyes,mbno],0)=mryes
   then
      begin
-       uDmConexao.cdsFuncionario.Delete;
-       uDmConexao.ListarFuncionario;
+       uDmConexao.DeletarFuncionario;
        pnlEndereco.Enabled := False;
      end;
   end;
 
 end;
 
-procedure TfrmCadastroFuncionario.btnNovoEnderecoClick(Sender: TObject);
+procedure TfrmCadastroFuncionario.btnExcluirEnderecoClick(Sender: TObject);
 begin
-   uDmConexao.NovoEndereco;
-   grdEndFunc.ReadOnly := False;
+   uDmConexao.cdsEndereco.Delete;
 end;
 
 procedure TfrmCadastroFuncionario.btnSalvarClick(Sender: TObject);
