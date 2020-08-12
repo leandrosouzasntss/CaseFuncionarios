@@ -84,9 +84,16 @@ object uDmConexao: TuDmConexao
     end
   end
   object sqlEndereco: TSQLDataSet
-    CommandText = 'select * from ENDFUNC'#13#10'WHERE '#13#10'CODFUNC=:CODFUNC;'
+    CommandText = 
+      'select * from ENDFUNC'#13#10'WHERE '#13#10'(CODFUNC=:CODFUNC OR :CODFUNC = 0' +
+      ')'
     MaxBlobSize = -1
     Params = <
+      item
+        DataType = ftInteger
+        Name = 'CODFUNC'
+        ParamType = ptInput
+      end
       item
         DataType = ftInteger
         Name = 'CODFUNC'
@@ -95,6 +102,30 @@ object uDmConexao: TuDmConexao
     SQLConnection = SQLConnection
     Left = 144
     Top = 136
+    object sqlEnderecoid: TIntegerField
+      FieldName = 'id'
+      Required = True
+    end
+    object sqlEnderecocodfunc: TIntegerField
+      FieldName = 'codfunc'
+      Required = True
+    end
+    object sqlEnderecoendereco: TStringField
+      FieldName = 'endereco'
+      Size = 50
+    end
+    object sqlEnderecobairro: TStringField
+      FieldName = 'bairro'
+      Size = 30
+    end
+    object sqlEnderecocep: TStringField
+      FieldName = 'cep'
+      Size = 9
+    end
+    object sqlEnderecocidade: TStringField
+      FieldName = 'cidade'
+      Size = 45
+    end
   end
   object dspFuncionario: TDataSetProvider
     DataSet = sqlFuncionario
@@ -151,10 +182,46 @@ object uDmConexao: TuDmConexao
   end
   object cdsEndereco: TClientDataSet
     Aggregates = <>
-    Params = <>
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'CODFUNC'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftInteger
+        Name = 'CODFUNC'
+        ParamType = ptInput
+      end>
     ProviderName = 'dspEndereco'
+    BeforePost = cdsEnderecoBeforePost
+    AfterPost = cdsEnderecoAfterPost
     Left = 368
     Top = 136
+    object cdsEnderecoid: TIntegerField
+      FieldName = 'id'
+      Required = True
+    end
+    object cdsEnderecocodfunc: TIntegerField
+      FieldName = 'codfunc'
+      Required = True
+    end
+    object cdsEnderecoendereco: TStringField
+      FieldName = 'endereco'
+      Size = 50
+    end
+    object cdsEnderecobairro: TStringField
+      FieldName = 'bairro'
+      Size = 30
+    end
+    object cdsEnderecocep: TStringField
+      FieldName = 'cep'
+      Size = 9
+    end
+    object cdsEnderecocidade: TStringField
+      FieldName = 'cidade'
+      Size = 45
+    end
   end
   object SQL: TSQLQuery
     MaxBlobSize = -1

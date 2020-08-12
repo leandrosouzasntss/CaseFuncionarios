@@ -43,17 +43,34 @@ type
     cdsListarFuncionariosexo: TStringField;
     cdsListarFuncionariodtadmissao: TDateField;
     cdsListarFuncionariofuncao: TStringField;
+    sqlEnderecoid: TIntegerField;
+    sqlEnderecocodfunc: TIntegerField;
+    sqlEnderecoendereco: TStringField;
+    sqlEnderecobairro: TStringField;
+    sqlEnderecocep: TStringField;
+    sqlEnderecocidade: TStringField;
+    cdsEnderecoid: TIntegerField;
+    cdsEnderecocodfunc: TIntegerField;
+    cdsEnderecoendereco: TStringField;
+    cdsEnderecobairro: TStringField;
+    cdsEnderecocep: TStringField;
+    cdsEnderecocidade: TStringField;
     procedure cdsFuncionarioAfterPost(DataSet: TDataSet);
     procedure cdsFuncionarioBeforePost(DataSet: TDataSet);
     procedure cdsFuncionarioNewRecord(DataSet: TDataSet);
     procedure cdsListarFuncionarioAfterScroll(DataSet: TDataSet);
     procedure cdsFuncionarioAfterDelete(DataSet: TDataSet);
+    procedure cdsEnderecoBeforePost(DataSet: TDataSet);
+    procedure cdsEnderecoAfterPost(DataSet: TDataSet);
   private
     { Private declarations }
   public
     procedure NovoFuncionario;
-    procedure ListarFuncionario;
     procedure GravarFuncionario;
+    procedure ListarFuncionario;
+    procedure GravarEndereco;
+    procedure NovoEndereco;
+    Procedure ListarEndereco;
     { Public declarations }
   end;
 
@@ -66,79 +83,118 @@ uses
   MidasLib;
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
-
 {$R *.dfm}
+
+procedure TuDmConexao.cdsEnderecoAfterPost(DataSet: TDataSet);
+begin
+  GravarEndereco;
+end;
+
+procedure TuDmConexao.cdsEnderecoBeforePost(DataSet: TDataSet);
+var
+  SQL: TSQLDataSet;
+begin
+  if DataSet.State = dsInsert then
+  begin
+    SQL := TSQLDataSet.Create(nil);
+  end;
+
+  try
+    SQL.SQLConnection := SQLConnection;
+    SQL.CommandText := 'SELECT MAX(ID)+1 AS ID FROM ENDFUNC';
+    SQL.Open;
+
+    cdsEnderecoid.AsInteger := SQL.FieldByName('ID').AsInteger;
+  finally
+    SQL.Free;
+  end;
+end;
 
 procedure TuDmConexao.cdsFuncionarioAfterDelete(DataSet: TDataSet);
 begin
-    GravarFuncionario;
+  GravarFuncionario;
 end;
 
 procedure TuDmConexao.cdsFuncionarioAfterPost(DataSet: TDataSet);
 begin
-   inherited;
-    GravarFuncionario;
+  inherited;
+  GravarFuncionario;
 end;
 
 procedure TuDmConexao.cdsFuncionarioBeforePost(DataSet: TDataSet);
 var
-   sql : TSQLDataSet;
+  SQL: TSQLDataSet;
 begin
-   inherited;
+  inherited;
 
-   if DataSet.State = dsInsert then
-   begin
-     //Quando der um Append / Post em um Registro o Status fica como dsInsert
-     // Necessário verificar o ID + 1 no banco para assumir como ID do registro.
-     sql := TSQLDataSet.Create(nil);
+  if DataSet.State = dsInsert then
+  begin
+    // Quando der um Append / Post em um Registro o Status fica como dsInsert
+    // Necessário verificar o ID + 1 no banco para assumir como ID do registro.
+    SQL := TSQLDataSet.Create(nil);
 
-     try
-       sql.SQLConnection := SQLConnection;
-       sql.CommandText := 'SELECT MAX(CODIGO)+1 AS ID FROM FUNCIONARIOS';
-       sql.Open;
+    try
+      SQL.SQLConnection := SQLConnection;
+      SQL.CommandText := 'SELECT MAX(CODIGO)+1 AS ID FROM FUNCIONARIOS';
+      SQL.Open;
 
-       cdsFuncionarioCODIGO.AsInteger
-                    := sql.FieldByName('ID').AsInteger;
-     finally
-        sql.Free;
-     end;
-   end;
+      cdsFuncionariocodigo.AsInteger := SQL.FieldByName('ID').AsInteger;
+    finally
+      SQL.Free;
+    end;
+  end;
 
 end;
 
 procedure TuDmConexao.cdsFuncionarioNewRecord(DataSet: TDataSet);
 begin
-  cdsFuncionarioSexo.AsString := 'Outros';
+  cdsFuncionariosexo.AsString := 'Outros';
 end;
 
 procedure TuDmConexao.cdsListarFuncionarioAfterScroll(DataSet: TDataSet);
 begin
   uDmConexao.cdsFuncionario.Close;
   uDmConexao.cdsFuncionario.ParamByName('ID').AsInteger :=
-  uDmConexao.cdsListarFuncionarioCodigo.AsInteger;
+  uDmConexao.cdsListarFuncionariocodigo.AsInteger;
   uDmConexao.cdsFuncionario.Open;
 
-//  uDmConexao.cdsEndereco.Close;
-//  uDmConexao.cdsEndereco.ParamByName('ID').AsInteger :=
-//  uDmConexao.cdsListarFuncionarioCodigo.AsInteger;
-//  uDmConexao.cdsEndereco.Open;
+  uDmConexao.cdsEndereco.Close;
+  uDmConexao.cdsEndereco.ParamByName('CODFUNC').AsInteger :=
+  uDmConexao.cdsListarFuncionariocodigo.AsInteger;
+  uDmConexao.cdsEndereco.Open;
 
+end;
 
+procedure TuDmConexao.GravarEndereco;
+begin
+  if (cdsEndereco.State in [dsEdit, dsInsert]) then
+  begin
+    cdsEndereco.Cancel;
+  end;
+  if not(cdsEndereco.State in [dsInactive]) then
+    cdsEndereco.ApplyUpdates(-1);
 end;
 
 procedure TuDmConexao.GravarFuncionario;
 begin
-    if (cdsFuncionario.State in [dsEdit, dsInsert]) then
-   begin
-       //No AfterPost o State tem que estar em Browse, tratamento para
-       // não dar Access Violation.
-      cdsFuncionario.Cancel;
-   end;
+  if (cdsFuncionario.State in [dsEdit, dsInsert]) then
+  begin
+    // No AfterPost o State tem que estar em Browse, tratamento para
+    // não dar Access Violation.
+    cdsFuncionario.Cancel;
+  end;
 
-   //Verifica se o CDS não esta Inativo, (dsBrowse).
-   // Se passar na Validação ele persiste do Post para o Banco (ApplyUpdates);
-   if not (cdsFuncionario.State in [dsInactive]) then
-      cdsFuncionario.ApplyUpdates(-1);
+  // Verifica se o CDS não esta Inativo, (dsBrowse).
+  // Se passar na Validação ele persiste do Post para o Banco (ApplyUpdates);
+  if not(cdsFuncionario.State in [dsInactive]) then
+    cdsFuncionario.ApplyUpdates(-1);
+end;
+
+procedure TuDmConexao.ListarEndereco;
+begin
+  uDmConexao.cdsEndereco.Close;
+  uDmConexao.cdsEndereco.ParamByName('CODFUNC').AsInteger := 0;
+  uDmConexao.cdsEndereco.Open;
 end;
 
 procedure TuDmConexao.ListarFuncionario;
@@ -148,21 +204,22 @@ begin
   uDmConexao.cdsListarFuncionario.Open;
 end;
 
+procedure TuDmConexao.NovoEndereco;
+begin
+  cdsEndereco.Close;
+  cdsEndereco.ParamByName('CODFUNC').AsInteger := -1;
+  cdsEndereco.Open;
+  cdsEndereco.Append;
+end;
+
 procedure TuDmConexao.NovoFuncionario;
 begin
-   cdsFuncionario.Close;
-   cdsFuncionario.ParamByName('ID').AsInteger := -1;
-   cdsFuncionario.Open;
-   //Novo Registro - -1 Não vai retornar nenhum registro
-   cdsFuncionario.Append;
-   //Append digo pro CDS que estou Criando um registro.
-
-   {
-      SELECT * FROM
-      FUNCIONARIOS
-      WHERE
-      (CODIGO = :ID OR :ID = 0);
-   }
+  cdsFuncionario.Close;
+  cdsFuncionario.ParamByName('ID').AsInteger := -1;
+  cdsFuncionario.Open;
+  // Novo Registro - -1 Não vai retornar nenhum registro
+  cdsFuncionario.Append;
+  // Append digo pro CDS que estou Criando um registro.
 
 end;
 

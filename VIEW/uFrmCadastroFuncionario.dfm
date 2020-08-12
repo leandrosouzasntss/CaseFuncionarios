@@ -31,6 +31,7 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     ParentCtl3D = False
     ParentDoubleBuffered = False
     TabOrder = 2
+    ExplicitLeft = 5
     object lblDescricao: TLabel
       Left = 8
       Top = 8
@@ -73,9 +74,9 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     object lblDtAdmissao: TLabel
       Left = 260
       Top = 79
-      Width = 106
+      Width = 110
       Height = 14
-      Caption = 'DATA ADMISS'#195'O'
+      Caption = 'DATA ADMISS'#195'O:'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -12
@@ -246,7 +247,7 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
           Expanded = False
           FieldName = 'nome'
           Title.Caption = 'Nome'
-          Width = 450
+          Width = 300
           Visible = True
         end>
     end
@@ -317,18 +318,46 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
+      OnClick = btnNovoEnderecoClick
     end
     object grdEndFunc: TDBGrid
       Left = 50
       Top = 27
       Width = 544
       Height = 120
+      DataSource = dsEnderecos
       TabOrder = 2
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'endereco'
+          Title.Caption = 'ENDERE'#199'O'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'bairro'
+          Title.Caption = 'BAIRRO'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'cep'
+          Title.Caption = 'CEP'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'cidade'
+          Title.Caption = 'CIDADE'
+          Width = 150
+          Visible = True
+        end>
     end
     object lblEndereco: TStaticText
       Left = 8
@@ -347,7 +376,7 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
   end
   object dsListarFuncionarios: TDataSource
     DataSet = uDmConexao.cdsListarFuncionario
-    Left = 408
+    Left = 376
     Top = 8
   end
   object dsEnderecos: TDataSource
@@ -358,7 +387,7 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
   object dsFuncionarios: TDataSource
     DataSet = uDmConexao.cdsFuncionario
     OnDataChange = dsFuncionariosDataChange
-    Left = 424
+    Left = 408
     Top = 8
   end
 end

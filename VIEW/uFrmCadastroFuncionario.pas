@@ -43,6 +43,7 @@ type
     procedure dsFuncionariosDataChange(Sender: TObject; Field: TField);
     procedure btnExcluirClick(Sender: TObject);
     procedure sbLocalizarChange(Sender: TObject);
+    procedure btnNovoEnderecoClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -74,6 +75,11 @@ end;
 procedure TfrmCadastroFuncionario.btnNovoClick(Sender: TObject);
 begin
   uDmConexao.NovoFuncionario;
+end;
+
+procedure TfrmCadastroFuncionario.btnNovoEnderecoClick(Sender: TObject);
+begin
+     uDmConexao.NovoEndereco;
 end;
 
 procedure TfrmCadastroFuncionario.btnSalvarClick(Sender: TObject);
