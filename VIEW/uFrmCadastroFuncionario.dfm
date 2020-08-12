@@ -34,8 +34,6 @@ object frmCadastroFuncionario: TfrmCadastroFuncionario
     ParentCtl3D = False
     ParentDoubleBuffered = False
     TabOrder = 2
-    ExplicitLeft = 368
-    ExplicitTop = 225
     object lblDescricao: TLabel
       Left = 8
       Top = 8
