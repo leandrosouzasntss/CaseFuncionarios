@@ -139,7 +139,7 @@ begin
       begin
          uDmConexao.cdsListarFuncionario.Filtered := False;
          uDmConexao.cdsListarFuncionario.Filter   :=
-         'NOME LIKE ('''+ sbLocalizar.Text +''')'  ;
+          'NOME LIKE ' + QuotedStr('%' + Trim(sbLocalizar.Text) + '%');
          uDmConexao.cdsListarFuncionario.Filtered := True;
       end;
     end;
