@@ -196,6 +196,7 @@ object uDmConexao: TuDmConexao
     ProviderName = 'dspEndereco'
     BeforePost = cdsEnderecoBeforePost
     AfterPost = cdsEnderecoAfterPost
+    AfterDelete = cdsEnderecoAfterDelete
     Left = 368
     Top = 136
     object cdsEnderecoid: TIntegerField
