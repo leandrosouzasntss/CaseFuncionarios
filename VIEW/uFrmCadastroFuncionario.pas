@@ -61,6 +61,7 @@ implementation
 
 {$R *.dfm}
 
+//Action
 procedure TfrmCadastroFuncionario.ACT_NOVOENDERECOExecute(Sender: TObject);
 begin
    uDmConexao.NovoEndereco;
@@ -83,6 +84,8 @@ begin
      begin
        uDmConexao.DeletarFuncionario;
        pnlEndereco.Enabled := False;
+
+       ShowMessage('Cadastro removido com sucesso!');
      end;
   end;
 

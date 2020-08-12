@@ -29,6 +29,7 @@ implementation
 
 uses uFrmCadastroFuncionario;
 
+  //Action QUE VAI ABRIR MEU FORMULÁRIO DENTRO DO MENU PRINCIPAL
 procedure TfrmMenuPrincipal.ACT_ABRICADASTROExecute(Sender: TObject);
 begin
    Application.CreateForm(TfrmCadastroFuncionario, frmCadastroFuncionario);

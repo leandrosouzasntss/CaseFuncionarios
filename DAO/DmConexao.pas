@@ -174,8 +174,6 @@ end;
 
 procedure TuDmConexao.DeletarFuncionario;
 begin
-   uDmConexao.cdsFuncionario.Delete;
-
    // Validação Para Deletar Funcionario
    cdsEndereco.Close;
    cdsEndereco.ParamByName('CODFUNC').AsInteger :=
@@ -186,7 +184,8 @@ begin
    while not cdsEndereco.Eof do
       cdsEndereco.Delete;
 
-   uDmConexao.ListarFuncionario;
+   cdsFuncionario.Delete;
+   ListarFuncionario;
 end;
 
 procedure TuDmConexao.GravarEndereco;

@@ -90,8 +90,6 @@
         <DCCReference Include="VIEW\uFrmCadastroFuncionario.pas">
             <Form>frmCadastroFuncionario</Form>
         </DCCReference>
-        <DCCReference Include="MODEL\classeEndereco.pas"/>
-        <DCCReference Include="MODEL\classeFuncionario.pas"/>
         <DCCReference Include="DAO\DmConexao.pas">
             <Form>uDmConexao</Form>
             <FormType>dfm</FormType>

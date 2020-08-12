@@ -39,7 +39,6 @@ object uDmConexao: TuDmConexao
       'Encrypted=False'
       'BlobSize=-1'
       'ErrorResourceFile=')
-    Connected = True
     Left = 48
     Top = 112
   end
