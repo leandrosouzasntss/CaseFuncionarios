@@ -82,7 +82,7 @@ end;
 procedure TfrmCadastroFuncionario.btnNovoEnderecoClick(Sender: TObject);
 begin
      uDmConexao.NovoEndereco;
-     grdEndFunc.ReadOnly := True;
+     grdEndFunc.ReadOnly := False;
 end;
 
 procedure TfrmCadastroFuncionario.btnSalvarClick(Sender: TObject);
