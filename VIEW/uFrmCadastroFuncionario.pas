@@ -67,6 +67,7 @@ begin
      begin
        uDmConexao.cdsFuncionario.Delete;
        uDmConexao.ListarFuncionario;
+       pnlEndereco.Enabled := False;
      end;
   end;
 
@@ -75,11 +76,13 @@ end;
 procedure TfrmCadastroFuncionario.btnNovoClick(Sender: TObject);
 begin
   uDmConexao.NovoFuncionario;
+  pnlEndereco.Enabled := False;
 end;
 
 procedure TfrmCadastroFuncionario.btnNovoEnderecoClick(Sender: TObject);
 begin
      uDmConexao.NovoEndereco;
+     grdEndFunc.ReadOnly := True;
 end;
 
 procedure TfrmCadastroFuncionario.btnSalvarClick(Sender: TObject);
@@ -101,6 +104,7 @@ begin
         uDmConexao.cdsFuncionariodtadmissao.AsDateTime := dtpDtAdmissao.Date;
         uDmConexao.cdsFuncionario.Post;
         uDmConexao.ListarFuncionario;
+        pnlEndereco.Enabled := uDmConexao.cdsFuncionarioCODIGO.AsInteger > 0;
      end;
    finally
      uDmConexao.cdsFuncionario.EnableControls;
@@ -112,6 +116,7 @@ procedure TfrmCadastroFuncionario.dsFuncionariosDataChange(Sender: TObject;
 begin
   dtpDtNasc.Date := uDmConexao.cdsFuncionariodtnasc.AsDateTime;
   dtpDtAdmissao.Date := uDmConexao.cdsFuncionariodtadmissao.AsDateTime;
+  pnlEndereco.Enabled := uDmConexao.cdsFuncionarioCODIGO.AsInteger > 0;
 end;
 
 procedure TfrmCadastroFuncionario.FormShow(Sender: TObject);
