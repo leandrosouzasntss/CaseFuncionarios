@@ -39,6 +39,7 @@ object uDmConexao: TuDmConexao
       'Encrypted=False'
       'BlobSize=-1'
       'ErrorResourceFile=')
+    Connected = True
     Left = 48
     Top = 112
   end
@@ -58,7 +59,7 @@ object uDmConexao: TuDmConexao
       end>
     SQLConnection = SQLConnection
     Left = 144
-    Top = 72
+    Top = 80
     object sqlFuncionariocodigo: TIntegerField
       FieldName = 'codigo'
       Required = True
@@ -81,6 +82,9 @@ object uDmConexao: TuDmConexao
       FieldName = 'funcao'
       Size = 45
     end
+    object sqlFuncionariosalario: TFloatField
+      FieldName = 'salario'
+    end
   end
   object sqlEndereco: TSQLDataSet
     CommandText = 
@@ -100,7 +104,7 @@ object uDmConexao: TuDmConexao
       end>
     SQLConnection = SQLConnection
     Left = 144
-    Top = 136
+    Top = 144
     object sqlEnderecoid: TIntegerField
       FieldName = 'id'
       Required = True
@@ -177,6 +181,10 @@ object uDmConexao: TuDmConexao
     object cdsFuncionariofuncao: TStringField
       FieldName = 'funcao'
       Size = 45
+    end
+    object cdsFuncionariosalario: TFloatField
+      FieldName = 'salario'
+      DisplayFormat = '#,0.00'
     end
   end
   object cdsEndereco: TClientDataSet
@@ -262,6 +270,9 @@ object uDmConexao: TuDmConexao
       FieldName = 'funcao'
       Size = 45
     end
+    object sqlListarFuncionariosalario: TFloatField
+      FieldName = 'salario'
+    end
   end
   object dspListarFuncionario: TDataSetProvider
     DataSet = sqlListarFuncionario
@@ -306,6 +317,9 @@ object uDmConexao: TuDmConexao
     object cdsListarFuncionariofuncao: TStringField
       FieldName = 'funcao'
       Size = 45
+    end
+    object cdsListarFuncionariosalario: TFloatField
+      FieldName = 'salario'
     end
   end
 end
